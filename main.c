@@ -52,5 +52,29 @@ DecodeInstruction decode_instruction(uint32_t instr) {
       dec.funct = instr & 0x3F;
       break;
 
+
+    case 0x08:
+    case 0x23:
+      dec.rs = (instr >> 21) & 0x1F;
+      dec.rt = (instr >> 16) & 0x1F;
+      dec.imm = instr & 0xFFFF;
+      dec.imm_se = (int16_t)dec.imm;
+      break;
+
+
+    case 0x02:
+      dec.target = instr & 0x03FFFFFF;
+      dec.target <<= 2;
+      break;
+
+
+
+    default:
+      prinf("Uknown opcode");
+      break;
+  }
+
+  return dec;
+
   
 }
